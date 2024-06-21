@@ -11,8 +11,8 @@ import (
 
 // Client represents a gRPC client for auth operations.
 type Client struct {
-	conn   *grpc.ClientConn
-	client authv1.AuthClient
+	Conn   *grpc.ClientConn
+	Client authv1.AuthClient
 }
 
 // NewClient creates a new Client instance.
@@ -29,21 +29,21 @@ func NewClient(serverAddress string) (*Client, error) {
 	authClient := authv1.NewAuthClient(conn)
 
 	return &Client{
-		conn:   conn,
-		client: authClient,
+		Conn:   conn,
+		Client: authClient,
 	}, nil
 }
 
 // Close closes the connection to the gRPC server.
 func (c *Client) Close() {
-	if c.conn != nil {
-		c.conn.Close()
+	if c.Conn != nil {
+		c.Conn.Close()
 	}
 }
 
 // Login logs in the user with the specified username and password.
 func (c *Client) Login(ctx context.Context, username, password string) (string, error) {
-	resp, err := c.client.Login(
+	resp, err := c.Client.Login(
 		ctx,
 		&authv1.LoginRequest{
 			Username: username,
@@ -65,7 +65,7 @@ func (c *Client) Register(ctx context.Context, username, password string, role d
 		role = domain.USER
 	}
 
-	_, err := c.client.Register(
+	_, err := c.Client.Register(
 		ctx,
 		&authv1.RegisterRequest{
 			Username: username,
@@ -82,7 +82,7 @@ func (c *Client) Register(ctx context.Context, username, password string, role d
 
 // ValidateToken validates the specified token.
 func (c *Client) ValidateToken(ctx context.Context, token string) (*domain.User, error) {
-	resp, err := c.client.ValidateToken(
+	resp, err := c.Client.ValidateToken(
 		ctx,
 		&authv1.ValidateTokenRequest{
 			Token: token,
@@ -104,7 +104,7 @@ func (c *Client) ValidateToken(ctx context.Context, token string) (*domain.User,
 }
 
 func (c *Client) ChangeLinksRemaining(ctx context.Context, username string, linksRemaining int64) error {
-	_, err := c.client.ChangeLinksRemaining(
+	_, err := c.Client.ChangeLinksRemaining(
 		ctx,
 		&authv1.ChangeLinksRemainingRequest{
 			Username:       username,
