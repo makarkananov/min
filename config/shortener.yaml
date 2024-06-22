@@ -1,0 +1,12 @@
+redis_url: "redis://shortener_redis:6379/0"
+postgres_url: "postgres://shortener_user:shortener_password@shortener_postgres:5432/shortener?sslmode=disable"
+rate_limit: 10 # Represents the rate at which the limiter should be filled with tokens
+max_tokens: 100 # Represents the maximum number of tokens that can be stored in the limiter
+concurrency_limit: 10 # Max number of requests that can be executed in parallel
+auth_server_url: "auth_server:50051"
+kafka_brokers:
+  - "kafka1:29092"
+  - "kafka2:29093"
+  - "kafka3:29094"
+kafka_event_topic: "shortener-events"
+shorten_length: 4

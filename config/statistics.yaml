@@ -1,0 +1,8 @@
+clickhouse_url: "clickhouse://clickhouse:9000/"
+kafka_brokers:
+  - "kafka1:29092"
+  - "kafka2:29093"
+  - "kafka3:29094"
+kafka_consumer_group_id: "shortener-consumer-group"
+kafka_topics:
+  - "shortener-events"
