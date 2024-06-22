@@ -26,7 +26,7 @@ func (r *EventRepository) AddEvent(ctx context.Context, event domain.Event) erro
 		`INSERT INTO events (short_url, original_url, timestamp, user_agent, ip) VALUES (?, ?, ?, ?, ?)`,
 	)
 	if err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		return fmt.Errorf("failed to prepare insert statement: %w", err)
 	}
 	defer stmt.Close()
@@ -39,7 +39,7 @@ func (r *EventRepository) AddEvent(ctx context.Context, event domain.Event) erro
 		event.UserAgent,
 		event.IP,
 	); err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		return fmt.Errorf("failed to execute insert statement: %w", err)
 	}
 

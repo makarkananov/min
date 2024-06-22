@@ -74,6 +74,9 @@ func main() {
 
 	// Create a new instance of the Auth client.
 	authClient, err := auth.NewClient(viper.GetString("auth_server_url"))
+	if err != nil {
+		log.Panic("Error creating auth client:", err)
+	}
 
 	// Create a new instance of the ShortenerService.
 	shortenerService := service.NewShortener(pgRepo, redisRepo, viper.GetInt("shorten_length"), authClient)

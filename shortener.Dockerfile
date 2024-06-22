@@ -1,4 +1,17 @@
-FROM ubuntu:latest
-LABEL authors="portisch_barrel"
+FROM golang:1.22.4 as BuildStage
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o /shortener cmd/shortener/main.go
+
+FROM alpine:latest
+
+WORKDIR /
+COPY --from=BuildStage /shortener /shortener
+
+CMD ["/shortener"]
