@@ -19,7 +19,9 @@ The application consists of three main parts:
    - GET `/<shortened_url>` - redirects to the original URL.
    
 **_Shortener_** communicates with **_Auth_** server to authenticate users and uses _PostgreSQL_ as permanent storage and _Redis_ as cache. It also sends information about redirects to Kafka cluster.
+
 2. **_Auth_** - responsible for user authentication. It is gRPC server that listens on port `:50051` and provides endpoints for user authentication.
+
 3. **_Statistics_** - responsible for storing and displaying statistics. This service is listening for redirects information from Kafka and stores it in _Clickhouse_.
 
 Project also provides some basic limiters to prevent abuse of the service.
