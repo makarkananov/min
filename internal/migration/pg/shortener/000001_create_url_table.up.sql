@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS url (
     original_url VARCHAR(255) NOT NULL,
     short_url VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    owner_username TEXT NOT NULL,
+    owner_username TEXT NOT NULL
 );
